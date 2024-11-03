@@ -1,7 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Home() {
+  const { data: session } = useSession();
+
   return (
     <main>
       <nav>
@@ -16,7 +19,14 @@ export default function Home() {
           </div>
         </div>
 
-        <button>რეგისტრაცია</button>
+        {session ? (
+          <>
+            <p>Welcome, {session.user.name}</p>
+            <button onClick={() => signOut()}>Sign out</button>
+          </>
+        ) : (
+          <button onClick={() => signIn("google")}>Sign in with Google</button>
+        )}
       </nav>
 
       <div className="search">
@@ -28,6 +38,7 @@ export default function Home() {
             <FontAwesomeIcon className="mag-glass" icon={faMagnifyingGlass} />
           </div>
         </form>
+        <p>ფილმების ინფორმაციის ბაზა, რომელიც უბრალოდ ყველას სჯობია!</p>
       </div>
     </main>
   );
