@@ -21,8 +21,8 @@ export default function Home() {
 
         {session ? (
           <>
-            <p>Welcome, {session.user.name}</p>
-            <button onClick={() => signOut()}>Sign out</button>
+            {/* <p>Welcome, {session.user.name}</p> */}
+            {/* <button onClick={() => signOut()}>Sign out</button> */}
           </>
         ) : (
           <button onClick={() => signIn("google")}>Sign in with Google</button>
