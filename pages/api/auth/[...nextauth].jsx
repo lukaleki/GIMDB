@@ -1,10 +1,7 @@
-// pages/api/auth/[...nextauth].js
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { PrismaAdapter } from "@next-auth/prisma-adapter"; // Optional if using Prisma
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
+import clientPromise from "../../../lib/mongodb";
 
 export default NextAuth({
   providers: [
@@ -13,7 +10,7 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  adapter: PrismaAdapter(prisma), // Optional, only if you're using Prisma
+  adapter: MongoDBAdapter(clientPromise),
   secret: process.env.NEXTAUTH_SECRET, // Optional, but recommended for security
   session: {
     jwt: true, // Store session as JWT (default)

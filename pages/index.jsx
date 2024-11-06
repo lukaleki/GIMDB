@@ -20,8 +20,8 @@ export default function Home() {
 
         {session ? (
           <>
-            {/* <p>Welcome, {session.user.name}</p> */}
-            {/* <button onClick={() => signOut()}>Sign out</button> */}
+            <p>Welcome, {session.user.name}</p>
+            <button onClick={() => signOut()}>Sign out</button>
           </>
         ) : (
           <button onClick={() => signIn("google")}>Sign in with Google</button>
@@ -29,7 +29,7 @@ export default function Home() {
       </nav>
 
       <div className="search">
-        <h1>IMQDB</h1>
+        <h1>GIMDB</h1>
 
         <form>
           <input type="text" placeholder="search something..." />
