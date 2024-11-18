@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useState, useRouter } from "react";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const [query, setQuery] = useState("");
@@ -80,7 +81,7 @@ export default function Home() {
             placeholder="search something..."
           />
           <div className="mag-glass-container">
-            <button type="submit">
+            <button onClick={handleSearch} type="submit">
               <FontAwesomeIcon className="mag-glass" icon={faMagnifyingGlass} />
             </button>
           </div>

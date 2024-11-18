@@ -87,7 +87,7 @@ main {
         padding: 10px;
       }
 
-      .mag-glass-container {
+      button {
         width: 50px;
         height: 100%;
         background-color: $secondary-color;
@@ -95,8 +95,9 @@ main {
         display: flex;
         justify-content: center;
         align-items: center;
-        border-top-right-radius: inherit;
-        border-bottom-right-radius: inherit;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        border: none;
       }
 
       .mag-glass {
