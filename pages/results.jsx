@@ -5,8 +5,8 @@ import Image from "next/image";
 function ResultsPage() {
   const router = useRouter();
   const { query } = router.query; // Get the search query from the URL
-  let url;
   const [movies, setMovies] = useState([]);
+  const movieUrl = "https://image.tmdb.org/t/p/w500";
 
   const options = {
     method: "GET",
@@ -38,7 +38,7 @@ function ResultsPage() {
 
       fetchMovies();
     }
-  }, [query, url]);
+  }, []);
 
   return (
     <div>
@@ -51,16 +51,11 @@ function ResultsPage() {
             <li key={movie.id}>
               <h2>{movie.title}</h2>
               <Image
-                src={`https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(
-                  query
-                )}&api_key=6552edf45e7b1608836851f2520fa554${
-                  movie.poster_path
-                }`}
+                src={`${movieUrl}${movie.poster_path}`}
                 width={500}
                 height={500}
                 alt={`${movie.title} img`}
               />
-              <p>{movie.overview}</p>
             </li>
           ))
         ) : (
