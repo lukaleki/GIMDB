@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import defaultImage from "../public/images.jpeg";
 
 function ResultsPage() {
   const router = useRouter();
@@ -29,7 +30,7 @@ function ResultsPage() {
             options
           );
           const data = await res.json();
-          setMovies(data.results); // Assuming results array contains movie data
+          setMovies(data.results);
           const url = res;
         } catch (error) {
           console.error("Error fetching movies:", error);
@@ -40,8 +41,15 @@ function ResultsPage() {
     }
   }, []);
 
+  function TruncatedText({ text, maxLength = 100 }) {
+    const truncatedText =
+      text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+
+    return <p>{truncatedText}</p>;
+  }
+
   return (
-    <div>
+    <div className="results-container">
       <h1>
         Search Results for <strong>{query}</strong>
       </h1>
@@ -49,13 +57,21 @@ function ResultsPage() {
         {movies.length > 0 ? (
           movies.map((movie) => (
             <li key={movie.id}>
-              <h2>{movie.title}</h2>
               <Image
-                src={`${movieUrl}${movie.poster_path}`}
-                width={500}
-                height={500}
+                className="img"
+                src={
+                  movie.poster_path
+                    ? `${movieUrl}${movie.poster_path}` // Use API image if available
+                    : defaultImage
+                }
+                width={200}
+                height={200}
                 alt={`${movie.title} img`}
               />
+              <div className="text-container">
+                <h2>{movie.title} </h2>
+                <TruncatedText text={movie.overview} />
+              </div>
             </li>
           ))
         ) : (

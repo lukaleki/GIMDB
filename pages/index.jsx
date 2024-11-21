@@ -9,7 +9,6 @@ export default function Home() {
   const [movies, setMovies] = useState([]);
   const router = useRouter();
 
-  // Handle form submission
   const handleSearch = (event) => {
     event.preventDefault();
     if (query.trim()) {
@@ -31,11 +30,10 @@ export default function Home() {
     }
   };
 
-  // Function to fetch movies
   const fetchMovies = async (searchQuery) => {
     try {
       const res = await fetch(
-        `https://api.themoviedb.org/3/movie/11?api_key=6552edf45e7b1608836851f2520fa554`
+        `https://api.themoviedb.org/3/movie/11?api_key=${process.env.API_KEY}`
       );
       const data = await res.json();
       setMovies(data.results); // Assuming 'results' is where the list of movies is stored
