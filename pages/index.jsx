@@ -36,7 +36,7 @@ export default function Home() {
         `https://api.themoviedb.org/3/movie/11?api_key=${process.env.API_KEY}`
       );
       const data = await res.json();
-      setMovies(data.results); // Assuming 'results' is where the list of movies is stored
+      setMovies(data.results);
     } catch (error) {
       console.error("Error fetching movies:", error);
     }

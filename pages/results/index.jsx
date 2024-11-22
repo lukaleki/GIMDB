@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import defaultImage from "../public/images.jpeg";
+import defaultImage from "../../public/images.jpeg";
 
 function ResultsPage() {
   const router = useRouter();
@@ -9,16 +9,15 @@ function ResultsPage() {
   const [movies, setMovies] = useState([]);
   const movieUrl = "https://image.tmdb.org/t/p/w500";
 
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NTUyZWRmNDVlN2IxNjA4ODM2ODUxZjI1MjBmYTU1NCIsIm5iZiI6MTczMTkyODE4OC43MTQzMTUsInN1YiI6IjY0MjA5YzE2Njg5MjljMDA4MWE5OWEyZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.nWe5LbJG0kNAIvl6CVCC92T0C2s6Nm-FEc67tENImtQ",
-    },
-  };
-
   useEffect(() => {
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NTUyZWRmNDVlN2IxNjA4ODM2ODUxZjI1MjBmYTU1NCIsIm5iZiI6MTczMTkyODE4OC43MTQzMTUsInN1YiI6IjY0MjA5YzE2Njg5MjljMDA4MWE5OWEyZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.nWe5LbJG0kNAIvl6CVCC92T0C2s6Nm-FEc67tENImtQ",
+      },
+    };
     if (query) {
       // Fetch movies based on the query
       const fetchMovies = async () => {
@@ -39,9 +38,13 @@ function ResultsPage() {
 
       fetchMovies();
     }
-  }, []);
+  }, [query]);
 
-  function TruncatedText({ text, maxLength = 100 }) {
+  function handleClick({ movie }) {
+    movies.map((movie) => router.push(`/results/${movie.id}`));
+  }
+
+  function TruncatedText({ text, maxLength = 150 }) {
     const truncatedText =
       text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 
@@ -56,7 +59,7 @@ function ResultsPage() {
       <ul>
         {movies.length > 0 ? (
           movies.map((movie) => (
-            <li key={movie.id}>
+            <li onClick={handleClick} key={movie.id}>
               <Image
                 className="img"
                 src={
