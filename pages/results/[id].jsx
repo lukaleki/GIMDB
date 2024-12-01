@@ -1,6 +1,4 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import defaultImage from "../../public/images.jpeg";
@@ -44,7 +42,7 @@ function Id({ movie }) {
   return (
     <>
       {movie ? (
-        <span key={movie.id}>
+        <span className="movie-homepage-container" key={movie.id}>
           <Image
             className="img"
             src={
@@ -52,13 +50,16 @@ function Id({ movie }) {
                 ? `${movieUrl}${movie.poster_path}` // Use API image if available
                 : defaultImage
             }
-            width={200}
-            height={200}
+            width={500}
+            height={600}
             alt={`${movie.title} img`}
           />
           <div className="text-container">
             <h2>{movie.title} </h2>
             <p>{movie.overview}</p>
+            <div className="prog-circle">
+              <div className="prog-circle-fun"></div>
+            </div>
           </div>
         </span>
       ) : (
