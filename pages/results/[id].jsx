@@ -1,61 +1,68 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
 import Image from "next/image";
+import defaultImage from "../../public/images.jpeg";
 
-function Id({ params }) {
-  const [movies, setMovies] = useState([]);
-  const id = useParams().id;
-  useEffect(() => {
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NTUyZWRmNDVlN2IxNjA4ODM2ODUxZjI1MjBmYTU1NCIsIm5iZiI6MTczMTkyODE4OC43MTQzMTUsInN1YiI6IjY0MjA5YzE2Njg5MjljMDA4MWE5OWEyZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.nWe5LbJG0kNAIvl6CVCC92T0C2s6Nm-FEc67tENImtQ",
-      },
+export async function getServerSideProps(context) {
+  const { id } = context.params;
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NTUyZWRmNDVlN2IxNjA4ODM2ODUxZjI1MjBmYTU1NCIsIm5iZiI6MTczMTkyODE4OC43MTQzMTUsInN1YiI6IjY0MjA5YzE2Njg5MjljMDA4MWE5OWEyZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.nWe5LbJG0kNAIvl6CVCC92T0C2s6Nm-FEc67tENImtQ",
+    },
+  };
+
+  try {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/movie/${id}`,
+      options
+    );
+
+    fetch(`https://api.themoviedb.org/3/movie/${id}`, options)
+      .then((res) => res.json())
+      .then((res) => console.log(res));
+    const movie = await res.json();
+
+    return {
+      props: { movie }, // Pass the movie data as props
     };
-    if (id) {
-      // Fetch movies based on the query
-      const fetchMovies = async () => {
-        try {
-          const res = await fetch(
-            `https://api.themoviedb.org/3/movie/${id}`,
-            options
-          );
-          const data = await res.json();
-          setMovies(data.results);
-        } catch (error) {
-          console.error("Error fetching movies:", error);
-        }
-      };
+  } catch (error) {
+    return {
+      props: { movie: null }, // Handle errors gracefully
+    };
+  }
+}
 
-      fetchMovies();
-    }
-  }, [id]);
+function Id({ movie }) {
+  const router = useRouter();
+  const movieUrl = "https://image.tmdb.org/t/p/w500";
+
   return (
     <>
-      {movies.length > 0 ? (
-        movies.map((movie) => (
-          <li onClick={handleClick} key={movie.id}>
-            <Image
-              className="img"
-              src={
-                movie.poster_path
-                  ? `${movieUrl}${movie.poster_path}` // Use API image if available
-                  : defaultImage
-              }
-              width={200}
-              height={200}
-              alt={`${movie.title} img`}
-            />
-            <div className="text-container">
-              <h2>{movie.title} </h2>
-            </div>
-          </li>
-        ))
+      {movie ? (
+        <span key={movie.id}>
+          <Image
+            className="img"
+            src={
+              movie.poster_path
+                ? `${movieUrl}${movie.poster_path}` // Use API image if available
+                : defaultImage
+            }
+            width={200}
+            height={200}
+            alt={`${movie.title} img`}
+          />
+          <div className="text-container">
+            <h2>{movie.title} </h2>
+            <p>{movie.overview}</p>
+          </div>
+        </span>
       ) : (
-        <p>No results found</p>
+        <p>loading...</p>
       )}
     </>
   );

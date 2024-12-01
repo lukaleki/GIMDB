@@ -40,9 +40,13 @@ function ResultsPage() {
     }
   }, [query]);
 
-  function handleClick({ movie }) {
-    movies.map((movie) => router.push(`/results/${movie.id}`));
-  }
+  const handleClick = (movie) => {
+    if (movie && movie.id) {
+      router.push(`/results/${movie.id}`);
+    } else {
+      console.error("Movie ID is missing");
+    }
+  };
 
   function TruncatedText({ text, maxLength = 150 }) {
     const truncatedText =
@@ -59,7 +63,7 @@ function ResultsPage() {
       <ul>
         {movies.length > 0 ? (
           movies.map((movie) => (
-            <li onClick={handleClick} key={movie.id}>
+            <li onClick={() => handleClick(movie)} key={movie.id}>
               <Image
                 className="img"
                 src={
