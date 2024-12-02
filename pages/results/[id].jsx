@@ -58,7 +58,17 @@ function Id({ movie }) {
             <h2>{movie.title} </h2>
             <p>{movie.overview}</p>
             <div className="prog-circle">
-              <div className="prog-circle-fun"></div>
+              <div
+                className="prog-circle-fun"
+                style={{
+                  background: `conic-gradient(
+                       black 0% ${movie.vote_average}%, 
+                       #40a2e3 ${movie.vote_average}% 100%
+                      )`,
+                }}
+              >
+                <h1>{movie.vote_average}</h1>
+              </div>
             </div>
           </div>
         </span>
