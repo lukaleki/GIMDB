@@ -62,12 +62,13 @@ function Id({ movie }) {
                 className="prog-circle-fun"
                 style={{
                   background: `conic-gradient(
-                       black 0% ${movie.vote_average}%, 
-                       #40a2e3 ${movie.vote_average}% 100%
+                       #40a2e3 0% ${movie.vote_average * 10}%,
+                       black ${movie.vote_average * 10}%  100% 
                       )`,
                 }}
               >
-                <h1>{movie.vote_average}</h1>
+                {/* for it to return rounded number */}
+                <h1>{Number(movie.vote_average.toFixed(1))}</h1>
               </div>
             </div>
           </div>
