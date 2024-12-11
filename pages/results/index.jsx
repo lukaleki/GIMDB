@@ -30,7 +30,6 @@ function ResultsPage() {
           );
           const data = await res.json();
           setMovies(data.results);
-          const url = res;
         } catch (error) {
           console.error("Error fetching movies:", error);
         }
@@ -48,7 +47,7 @@ function ResultsPage() {
     }
   };
 
-  function TruncatedText({ text, maxLength = 150 }) {
+  function TruncatedText({ text, maxLength = 100 }) {
     const truncatedText =
       text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 

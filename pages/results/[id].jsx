@@ -20,9 +20,9 @@ export async function getServerSideProps(context) {
       options
     );
 
-    fetch(`https://api.themoviedb.org/3/movie/${id}`, options)
-      .then((res) => res.json())
-      .then((res) => console.log(res));
+    // fetch(`https://api.themoviedb.org/3/movie/${id}`, options)
+    //   .then((res) => res.json())
+    //   .then((res) => console.log(res));
     const movie = await res.json();
 
     return {
@@ -30,7 +30,7 @@ export async function getServerSideProps(context) {
     };
   } catch (error) {
     return {
-      props: { movie: null }, // Handle errors gracefully
+      props: { movie: null },
     };
   }
 }
@@ -38,41 +38,62 @@ export async function getServerSideProps(context) {
 function Id({ movie }) {
   const router = useRouter();
   const movieUrl = "https://image.tmdb.org/t/p/w500";
-
+  console.log(movie);
   return (
     <>
       {movie ? (
-        <span className="movie-homepage-container" key={movie.id}>
-          <Image
-            className="img"
-            src={
-              movie.poster_path
-                ? `${movieUrl}${movie.poster_path}` // Use API image if available
-                : defaultImage
-            }
-            width={500}
-            height={600}
-            alt={`${movie.title} img`}
-          />
-          <div className="text-container">
-            <h2>{movie.title} </h2>
-            <p>{movie.overview}</p>
-            <div className="prog-circle">
-              <div
-                className="prog-circle-fun"
-                style={{
-                  background: `conic-gradient(
-                       #40a2e3 0% ${movie.vote_average * 10}%,
-                       black ${movie.vote_average * 10}%  100% 
+        <div className="movie-homepage-container" key={movie.id}>
+          <h1>{movie.title} </h1>
+
+          <div className="img-container">
+            <Image
+              className="img"
+              src={
+                movie.poster_path
+                  ? `${movieUrl}${movie.poster_path}` // Use API image if available
+                  : defaultImage
+              }
+              width={400}
+              height={500}
+              alt={`${movie.title} img`}
+            />
+            <div className="text-wrapper">
+              <div className="prog-circle">
+                <div
+                  className="prog-circle-fun"
+                  style={{
+                    background: `conic-gradient(
+                       #f8e9d6 0% ${movie.vote_average * 10}%,
+                       #e36a40 ${movie.vote_average * 10}%  100% 
                       )`,
-                }}
-              >
-                {/* for it to return rounded number */}
-                <h1>{Number(movie.vote_average.toFixed(1))}</h1>
+                  }}
+                >
+                  {/* for it to return rounded number, to fixed returns string */}
+                  <h1>{Number(movie.vote_average.toFixed(1))}</h1>
+                </div>
               </div>
+              <p>{movie.overview}</p>
+              <div className="genres-container">
+                <h2>genres: </h2>
+                <ul>
+                  {movie.genres.map((genre) => (
+                    <li key={movie.id}>
+                      <h3>{genre.name} |</h3>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <h3>
+                budget:{" "}
+                {movie.budget == 0
+                  ? "movie doesn't have a budget"
+                  : movie.budget}
+              </h3>
+              <h3>country of origin: {`${movie.origin_country}`}</h3>
+              <h3>production companies: {movie.production_companies.name}</h3>
             </div>
           </div>
-        </span>
+        </div>
       ) : (
         <p>loading...</p>
       )}

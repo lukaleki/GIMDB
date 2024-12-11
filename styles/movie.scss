@@ -2,26 +2,57 @@ $primary-color: #fff6e9;
 $primary-color-dark: #f8e9d6;
 $secondary-color: #40a2e3;
 $third-color: #bbe2ec;
-$fourth-color: #bbe2ec;
+$fourth-color: #e36a40;
 
 .movie-homepage-container {
-  display: flex;
+  padding: 10px;
+  .img {
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
 
-  .prog-circle {
-    width: 75px;
-    height: 75px;
-    position: relative;
+  .img-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: $secondary-color;
+    color: $primary-color;
+    border-radius: 10px;
 
-    .prog-circle-fun {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .text-wrapper {
+      margin: 5px;
 
-      h1 {
-        color: $primary-color;
+      .genres-container {
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        background-color: $primary-color-dark;
+        color: $secondary-color;
+
+        ul {
+          display: flex;
+          gap: 5px;
+          width: 100%;
+        }
+      }
+    }
+
+    .prog-circle {
+      width: 75px;
+      height: 75px;
+      position: relative;
+
+      .prog-circle-fun {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        h1 {
+          color: $secondary-color;
+        }
       }
     }
   }
