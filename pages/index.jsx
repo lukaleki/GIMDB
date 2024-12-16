@@ -84,7 +84,7 @@ export default function Home() {
             </button>
           </div>
         </form>
-        <p>ფილმების ინფორმაციის ბაზა, რომელიც უბრალოდ ყველას სჯობია!</p>
+        <p>Simply The Best Movie Database!</p>
       </div>
     </main>
   );

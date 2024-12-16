@@ -20,25 +20,27 @@ export async function getServerSideProps(context) {
       options
     );
 
-    // fetch(`https://api.themoviedb.org/3/movie/${id}`, options)
-    //   .then((res) => res.json())
-    //   .then((res) => console.log(res));
+    const res1 = await fetch(
+      `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`,
+      options
+    );
+
+    const credits = await res1.json();
     const movie = await res.json();
 
     return {
-      props: { movie }, // Pass the movie data as props
+      props: { movie, credits }, // Pass the movie data as props
     };
   } catch (error) {
     return {
-      props: { movie: null },
+      props: { movie: null, credits: null },
     };
   }
 }
 
-function Id({ movie }) {
+function Id({ movie, credits }) {
   const router = useRouter();
   const movieUrl = "https://image.tmdb.org/t/p/w500";
-  console.log(movie);
   return (
     <>
       {movie ? (
@@ -77,22 +79,47 @@ function Id({ movie }) {
                 <h2>genres: </h2>
                 <ul>
                   {movie.genres.map((genre) => (
-                    <li key={movie.id}>
-                      <h3>{genre.name} |</h3>
-                    </li>
+                    <li key={movie.id}>{genre.name} ,</li>
                   ))}
                 </ul>
               </div>
-              <h3>
+              <h3 className="a">
                 budget:{" "}
                 {movie.budget == 0
                   ? "movie doesn't have a budget"
                   : movie.budget}
               </h3>
               <h3>country of origin: {`${movie.origin_country}`}</h3>
-              <h3>production companies: {movie.production_companies.name}</h3>
+              <h3 className="companies-container">
+                production companies:
+                <ul>
+                  {movie.production_companies.map((companies) => (
+                    <li key={movie.id}>
+                      <h5>{companies.name},</h5>
+                    </li>
+                  ))}
+                </ul>
+              </h3>
             </div>
           </div>
+          <ul className="actors">
+            {/* slice to get only 15 actors in array */}
+            {credits.cast.slice(0, 15).map((actor) => (
+              <li key={credits.id}>
+                <Image
+                  className="img"
+                  src={`${movieUrl}${actor.profile_path}`}
+                  alt={`${actor.name} png`}
+                  width={200}
+                  height={300}
+                />
+                <div className="text-wrapper">
+                  <p>{actor.name}</p>
+                  <p>{actor.character}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       ) : (
         <p>loading...</p>
