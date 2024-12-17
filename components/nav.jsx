@@ -1,10 +1,12 @@
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
-export default function Home() {
+function Nav() {
+  const { data: session } = useSession();
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const router = useRouter();
@@ -42,39 +44,22 @@ export default function Home() {
     }
   };
 
-  const { data: session } = useSession();
-
   return (
-    <main>
-      <nav>
-        <div className="title">
-          <div className="burger">
-            <div className="line"></div>
-            <div className="line"></div>
-            <div className="line"></div>
-          </div>
-          <div className="logo">
-            <h1>GIMDB</h1>
-          </div>
+    <nav>
+      <div className="title">
+        <div className="burger">
+          <div className="line"></div>
+          <div className="line"></div>
+          <div className="line"></div>
         </div>
+        <div className="logo">
+          <h1>
+            <Link href="/">GIMDB</Link>
+          </h1>
+        </div>
+      </div>
 
-        {session ? (
-          <>
-            <p>Welcome, {session.user.name}</p>
-            <button className="reg-btn" onClick={() => signOut()}>
-              Sign out
-            </button>
-          </>
-        ) : (
-          <button className="reg-btn" onClick={() => signIn("google")}>
-            Sign in with Google
-          </button>
-        )}
-      </nav>
-
-      <div className="search">
-        <h1>GIMDB</h1>
-
+      <div className="search-nav">
         <form onSubmit={handleSearch}>
           <input
             type="text"
@@ -83,13 +68,27 @@ export default function Home() {
             placeholder="search something..."
           />
           <div className="mag-glass-container">
-            <button onClick={handleSearch} type="submit">
+            <button className="search-btn" onClick={handleSearch} type="submit">
               <FontAwesomeIcon className="mag-glass" icon={faMagnifyingGlass} />
             </button>
           </div>
         </form>
-        <p>Simply The Best Movie Database!</p>
       </div>
-    </main>
+
+      {session ? (
+        <>
+          <p>Welcome, {session.user.name}</p>
+          <button className="reg-btn" onClick={() => signOut()}>
+            Sign out
+          </button>
+        </>
+      ) : (
+        <button className="reg-btn" onClick={() => signIn("google")}>
+          Sign in with Google
+        </button>
+      )}
+    </nav>
   );
 }
+
+export default Nav;

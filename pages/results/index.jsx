@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import defaultImage from "../../public/images.jpeg";
+import defaultImage from "@/public/images.jpeg";
 
 function ResultsPage() {
   const router = useRouter();

@@ -85,6 +85,8 @@ $fourth-color: #e36a40;
       padding: 0;
       border: 1px solid $secondary-color;
       border-radius: 5px;
+      background-color: $secondary-color;
+      color: $primary-color;
     }
 
     .img {

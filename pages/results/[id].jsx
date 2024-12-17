@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import defaultImage from "../../public/images.jpeg";
+import defaultImage from "@/public/images.jpeg";
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
@@ -84,10 +84,7 @@ function Id({ movie, credits }) {
                 </ul>
               </div>
               <h3 className="a">
-                budget:{" "}
-                {movie.budget == 0
-                  ? "movie doesn't have a budget"
-                  : movie.budget}
+                budget: {movie.budget == 0 ? "-" : movie.budget}
               </h3>
               <h3>country of origin: {`${movie.origin_country}`}</h3>
               <h3 className="companies-container">
@@ -103,22 +100,28 @@ function Id({ movie, credits }) {
             </div>
           </div>
           <ul className="actors">
-            {/* slice to get only 15 actors in array */}
-            {credits.cast.slice(0, 15).map((actor) => (
-              <li key={credits.id}>
-                <Image
-                  className="img"
-                  src={`${movieUrl}${actor.profile_path}`}
-                  alt={`${actor.name} png`}
-                  width={200}
-                  height={300}
-                />
-                <div className="text-wrapper">
-                  <p>{actor.name}</p>
-                  <p>{actor.character}</p>
-                </div>
-              </li>
-            ))}
+            {credits.cast.slice(0, 15).map(
+              //slice to get only 15 actors in array
+              (actor) => (
+                <li key={credits.id}>
+                  <Image
+                    className="img"
+                    src={
+                      actor.profile_path
+                        ? `${movieUrl}${actor.profile_path}`
+                        : defaultImage
+                    }
+                    alt={`${actor.name} png`}
+                    width={200}
+                    height={300}
+                  />
+                  <div className="text-wrapper">
+                    <p>{actor.name}</p>
+                    <p>{actor.character}</p>
+                  </div>
+                </li>
+              )
+            )}
           </ul>
         </div>
       ) : (

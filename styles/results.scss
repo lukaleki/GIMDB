@@ -33,4 +33,8 @@ $fourth-color: #bbe2ec;
       width: 50%;
     }
   }
+  li:hover {
+    scale: 1.01;
+    cursor: pointer;
+  }
 }
