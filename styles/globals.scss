@@ -33,6 +33,17 @@ a:visited {
   color: $secondary-color;
 }
 
+.standard-btn {
+  width: 120px;
+  height: 50px;
+  border-radius: 10px;
+  font-weight: 800;
+  background-color: $secondary-color;
+  color: $primary-color;
+  border: none;
+  cursor: pointer;
+}
+
 nav {
   padding: 10px;
   display: flex;
@@ -66,17 +77,6 @@ nav {
         height: 20%;
       }
     }
-  }
-
-  .reg-btn {
-    width: 120px;
-    height: 50px;
-    border-radius: 25px;
-    font-weight: 800;
-    background-color: $secondary-color;
-    color: $primary-color;
-    border: none;
-    cursor: pointer;
   }
 }
 

@@ -3,8 +3,25 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
-export default function Home() {
+export async function getServerSideProps(context) {
+  try {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/movie/11?api_key=${process.env.API_KEY}`
+    );
+    const data = await res.json();
+    return {
+      props: { data }, // pass the movie data as props
+    };
+  } catch (error) {
+    return {
+      props: { data: null },
+    };
+  }
+}
+
+export default function Home({ data }) {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const router = useRouter();
@@ -14,31 +31,6 @@ export default function Home() {
     if (query.trim()) {
       // Redirect to the results page with the query as a URL parameter
       router.push(`/results?query=${encodeURIComponent(query)}`);
-    }
-  };
-
-  // Event handler for input change
-  const handleInputChange = async (event) => {
-    const searchQuery = event.target.value;
-    setQuery(searchQuery);
-
-    if (searchQuery.length > 2) {
-      // Start searching after a few characters
-      await fetchMovies(searchQuery);
-    } else {
-      setMovies([]); // Clear results if input is too short
-    }
-  };
-
-  const fetchMovies = async (searchQuery) => {
-    try {
-      const res = await fetch(
-        `https://api.themoviedb.org/3/movie/11?api_key=${process.env.API_KEY}`
-      );
-      const data = await res.json();
-      setMovies(data.results);
-    } catch (error) {
-      console.error("Error fetching movies:", error);
     }
   };
 
@@ -61,12 +53,12 @@ export default function Home() {
         {session ? (
           <>
             <p>Welcome, {session.user.name}</p>
-            <button className="reg-btn" onClick={() => signOut()}>
+            <button className="standard-btn" onClick={() => signOut()}>
               Sign out
             </button>
           </>
         ) : (
-          <button className="reg-btn" onClick={() => signIn("google")}>
+          <button className="standard-btn" onClick={() => signIn("google")}>
             Sign in with Google
           </button>
         )}
@@ -89,6 +81,11 @@ export default function Home() {
           </div>
         </form>
         <p>Simply The Best Movie Database!</p>
+        <Link href="/Home">
+          <button className="standard-btn" type="submit">
+            Home Page
+          </button>
+        </Link>
       </div>
     </main>
   );

@@ -16,12 +16,12 @@ export async function getServerSideProps(context) {
 
   try {
     const res = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}`,
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}`,
       options
     );
 
     const res1 = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`,
+      `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US?api_key=${process.env.API_KEY}`,
       options
     );
 

@@ -68,7 +68,7 @@ function Nav() {
             placeholder="search something..."
           />
           <div className="mag-glass-container">
-            <button className="search-btn" onClick={handleSearch} type="submit">
+            <button onClick={handleSearch} type="submit">
               <FontAwesomeIcon className="mag-glass" icon={faMagnifyingGlass} />
             </button>
           </div>
@@ -78,12 +78,12 @@ function Nav() {
       {session ? (
         <>
           <p>Welcome, {session.user.name}</p>
-          <button className="reg-btn" onClick={() => signOut()}>
+          <button className="standard-btn" onClick={() => signOut()}>
             Sign out
           </button>
         </>
       ) : (
-        <button className="reg-btn" onClick={() => signIn("google")}>
+        <button className="standard-btn" onClick={() => signIn("google")}>
           Sign in with Google
         </button>
       )}
