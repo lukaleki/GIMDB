@@ -15,8 +15,7 @@ $fourth-color: #bbe2ec;
   ul {
     padding-inline-start: 0px;
     display: grid;
-    place-items: center;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
   li {
     border-radius: 10px;
@@ -24,6 +23,7 @@ $fourth-color: #bbe2ec;
     color: $primary-color;
     display: flex;
     margin: 10px;
+    transition: 0.1s;
 
     .img {
       padding: 10px;

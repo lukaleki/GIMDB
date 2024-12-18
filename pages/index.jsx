@@ -5,22 +5,6 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-export async function getServerSideProps(context) {
-  try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/movie/11?api_key=${process.env.API_KEY}`
-    );
-    const data = await res.json();
-    return {
-      props: { data }, // pass the movie data as props
-    };
-  } catch (error) {
-    return {
-      props: { data: null },
-    };
-  }
-}
-
 export default function Home({ data }) {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
@@ -46,7 +30,9 @@ export default function Home({ data }) {
             <div className="line"></div>
           </div>
           <div className="logo">
-            <h1>GIMDB</h1>
+            <Link href="/">
+              <h1>GIMDB</h1>
+            </Link>
           </div>
         </div>
 
@@ -65,7 +51,9 @@ export default function Home({ data }) {
       </nav>
 
       <div className="search">
-        <h1>GIMDB</h1>
+        <Link href="/">
+          <h1>GIMDB</h1>
+        </Link>
 
         <form onSubmit={handleSearch}>
           <input

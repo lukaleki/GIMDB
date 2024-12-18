@@ -16,6 +16,7 @@ function Nav() {
     if (query.trim()) {
       // Redirect to the results page with the query as a URL parameter
       router.push(`/results?query=${encodeURIComponent(query)}`);
+      setQuery("");
     }
   };
 
