@@ -16,12 +16,12 @@ export async function getServerSideProps(context) {
 
   try {
     const res = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}`,
+      `https://api.themoviedb.org/3/movie/${id}`,
       options
     );
 
     const res1 = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US?api_key=${process.env.API_KEY}`,
+      `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`,
       options
     );
 
@@ -41,11 +41,12 @@ export async function getServerSideProps(context) {
 function Id({ movie, credits }) {
   const router = useRouter();
   const movieUrl = "https://image.tmdb.org/t/p/w500";
+  console.log(movie);
   return (
     <>
       {movie ? (
         <div className="movie-homepage-container" key={movie.id}>
-          <h1>{movie.title} </h1>
+          <h1>{movie.title}</h1>
 
           <div className="img-container">
             <Image
@@ -66,7 +67,7 @@ function Id({ movie, credits }) {
                   style={{
                     background: `conic-gradient(
                        #f8e9d6 0% ${movie.vote_average * 10}%,
-                       #e36a40 ${movie.vote_average * 10}%  100% 
+                       #bdbdbd ${movie.vote_average * 10}%  100% 
                       )`,
                   }}
                 >
