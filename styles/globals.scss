@@ -73,14 +73,14 @@ nav {
         width: 15px;
       }
     }
-    .logo {
-      h1 {
-        height: 20%;
-      }
-    }
+  }
+  .profile-img {
+    border-radius: 100%;
+    cursor: pointer;
   }
 }
 
+//margin only to home search bar, not nav one
 .search {
   margin-top: 75px;
 }

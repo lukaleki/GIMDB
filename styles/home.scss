@@ -4,10 +4,56 @@ $secondary-color: #40a2e3;
 $third-color: #bbe2ec;
 $fourth-color: #bdbdbd;
 
-.slider {
-  .img {
-    width: 50%;
-    height: 300px;
-    object-fit: cover;
+.featured {
+  padding: 5px;
+  .featured-cards {
+    display: flex;
+    gap: 10px;
+    padding: 0;
+    width: 100%;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    white-space: nowrap;
+
+    li {
+      padding: 0;
+      border: 1px solid $secondary-color;
+      border-radius: 5px;
+      background-color: $secondary-color;
+      color: $primary-color;
+      cursor: pointer;
+    }
+
+    li:hover {
+      background-color: #2a93d9;
+    }
+
+    p {
+      width: inherit;
+    }
+
+    .img {
+      border-radius: 5px;
+      object-fit: cover;
+    }
+
+    .text-wrapper {
+      margin-left: 5px;
+    }
+  }
+
+  .featured-cards::-webkit-scrollbar {
+    background-color: $primary-color;
+    height: 10px;
+  }
+
+  .featured-cards::-webkit-scrollbar-thumb {
+    background-color: #bdbdbd;
+    border-radius: 10px;
+  }
+
+  .featured-cards::-webkit-scrollbar-thumb:hover {
+    background-color: #cdcdcd;
+    border-radius: 10px;
   }
 }
