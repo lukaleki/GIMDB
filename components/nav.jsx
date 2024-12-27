@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import Link from "next/link";
 
 function Nav() {
@@ -78,10 +79,14 @@ function Nav() {
 
       {session ? (
         <>
-          <p>Welcome, {session.user.name}</p>
-          <button className="standard-btn" onClick={() => signOut()}>
-            Sign out
-          </button>
+          <Image
+            className="profile-img"
+            onClick={() => signOut()}
+            src={session.user.image}
+            width={50}
+            height={50}
+            alt={`${session.user.name} img`}
+          />
         </>
       ) : (
         <button className="standard-btn" onClick={() => signIn("google")}>
